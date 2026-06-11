@@ -3,6 +3,7 @@
 import { Reveal } from "./reveal"
 import { SectionHeading } from "./section-heading"
 import { Globe, Users, Award, TrendingUp, Monitor, Handshake, BookOpen, Target } from "lucide-react"
+import { getNextBatchMonthYear, getDemoDatesList } from "@/utils/demo-dates"
 
 const stats = [
   {
@@ -145,8 +146,8 @@ export function TrackRecord() {
             <p className="inline-block rounded-full bg-google-red/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-google-red">
               ⏰ Limited Seats Available
             </p>
-            <h3 className="mt-4 font-display text-2xl font-bold">Next Batch Starts January 2025</h3>
-            <p className="mt-2 text-muted-foreground">Only 30 seats per batch - Early bird discount available</p>
+            <h3 className="mt-4 font-display text-2xl font-bold">Next Batch Starts {getNextBatchMonthYear()}</h3>
+            <p className="mt-2 text-muted-foreground">Demo dates: {getDemoDatesList()} - Only 30 seats per batch</p>
             <a
               href="#enroll"
               className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-google-red to-google-red/80 px-8 py-3 font-display font-bold text-white transition-all hover:shadow-lg hover:shadow-google-red/25 active:scale-95"

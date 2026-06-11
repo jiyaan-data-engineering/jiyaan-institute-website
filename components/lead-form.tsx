@@ -3,8 +3,9 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Send, CheckCircle2, Phone, Mail, MapPin } from "lucide-react"
+import { Send, CheckCircle2, Phone, Mail, MapPin, Loader2 } from "lucide-react"
 import { Reveal } from "./reveal"
+import { submitToGoogleForms } from "@/utils/google-forms"
 
 const courses = [
   "GCP Data Engineering",
@@ -16,6 +17,8 @@ const courses = [
 
 export function LeadForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -28,11 +31,31 @@ export function LeadForm() {
     setForm((f) => ({ ...f, [field]: value }))
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    // In production this would POST to a CRM / API route.
-    console.log("[v0] Lead submitted:", form)
-    setSubmitted(true)
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const success = await submitToGoogleForms({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        course: form.course,
+        message: form.message,
+      })
+
+      if (success) {
+        setSubmitted(true)
+      } else {
+        setError("Failed to submit form. Please try again.")
+      }
+    } catch (err) {
+      console.error("Submission error:", err)
+      setError("An error occurred. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -91,10 +114,15 @@ export function LeadForm() {
                 <CheckCircle2 className="h-16 w-16 text-primary" />
                 <h3 className="mt-6 text-2xl font-bold">You&apos;re all set, {form.name.split(" ")[0] || "there"}!</h3>
                 <p className="mt-3 max-w-sm leading-relaxed text-muted-foreground">
-                  Our counsellor will reach out to you shortly with everything you need to begin your GCP journey.
+                  Thank you! Your demo request has been submitted successfully.
+                  <br />
+                  Our team will contact you shortly.
                 </p>
                 <button
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => {
+                    setSubmitted(false)
+                    setForm({ name: "", email: "", phone: "", course: courses[0], message: "" })
+                  }}
                   className="mt-8 rounded-lg border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:border-primary hover:text-primary"
                 >
                   Submit another response
@@ -156,12 +184,23 @@ export function LeadForm() {
                     className="form-input resize-none"
                   />
                 </Field>
+                {error && <div className="rounded-lg bg-red-500/10 p-3 text-sm text-red-600">{error}</div>}
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-base font-bold text-primary-foreground transition-transform hover:scale-[1.02]"
+                  disabled={isLoading}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-base font-bold text-primary-foreground transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Get My Free Counselling Call
-                  <Send className="h-4 w-4" />
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      Get My Free Counselling Call
+                      <Send className="h-4 w-4" />
+                    </>
+                  )}
                 </button>
                 <p className="text-center text-xs text-muted-foreground">
                   We respect your privacy. Your details are never shared.
