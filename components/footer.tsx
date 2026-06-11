@@ -86,7 +86,7 @@ export function Footer() {
               <Mail className="h-4 w-4" /> jiyaan.institute@gmail.com
             </a>
             <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-primary">
-              <Phone className="h-4 w-4" /> +91 9876543210
+              <Phone className="h-4 w-4" /> +91 99483 14189
             </a>
           </div>
         </div>

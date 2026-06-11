@@ -6,22 +6,22 @@ import { SectionHeading } from "./section-heading"
 
 const testimonials = [
   {
-    name: "Ananya Sharma",
+    name: "Anand Kumar",
     role: "Data Engineer @ Fortune 500",
     quote:
       "The hands-on BigQuery and Dataflow projects made all the difference. I cleared my GCP certification and landed a role within two months of finishing the course.",
     initial: "A",
   },
   {
-    name: "Rahul Verma",
+    name: "Chaitanya ",
     role: "Cloud Engineer",
     quote:
       "Mentors actually care here. The 1:1 doubt sessions and real pipeline projects gave me the confidence to switch from support to a core data engineering role.",
     initial: "R",
   },
   {
-    name: "Priya Nair",
-    role: "Analytics Engineer",
+    name: "Mounika",
+    role: "Senior Data Engineer",
     quote:
       "Coming from a non-IT background, I was nervous. The structured curriculum and placement support helped me triple my salary in my first cloud job.",
     initial: "P",
