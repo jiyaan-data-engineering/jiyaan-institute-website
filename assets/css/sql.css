@@ -1,0 +1,86 @@
+/* ================= MINDMAP UI FINAL FIX ================= */
+
+.mindmap-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 10px;
+}
+
+/* Card style (FIXED) */
+.mindmap-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 20px;
+  overflow: hidden;
+
+  /* ✅ Solid background for clarity */
+  background: #0f172a;
+
+  /* ❌ Removed heavy blur */
+  /* backdrop-filter: blur(20px); */
+
+  padding: 20px;
+
+  /* ✅ Clean shadow */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+
+  transition: transform 0.3s ease;
+}
+
+/* Hover zoom */
+.mindmap-wrapper:hover {
+  transform: scale(1.02);
+}
+
+/* Image styling (Sharper) */
+.mindmap-img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  display: block;
+
+  /* ✅ Improve rendering */
+  image-rendering: auto;
+}
+
+/* SVG overlay */
+.mindmap-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Flow animation (cleaner glow) */
+.flow {
+  fill: none;
+  stroke-width: 3;
+  stroke-dasharray: 8;
+  animation: flow 1s linear infinite;
+  opacity: 0.95;
+
+  /* ✅ Reduced blur glow */
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+/* Colors */
+.green { stroke: #00ff88; }
+.orange { stroke: #ff9800; }
+.purple { stroke: #d500f9; }
+.blue { stroke: #00b0ff; }
+.pink { stroke: #ff4081; }
+
+@keyframes flow {
+  to { stroke-dashoffset: -16; }
+}
+
+/* 📱 Mobile optimization */
+@media (max-width: 768px) {
+  .mindmap-wrapper {
+    padding: 12px;
+  }
+}

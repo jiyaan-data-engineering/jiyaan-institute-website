@@ -1,0 +1,144 @@
+/* Specific Course Detail styles */
+.course-section {
+  min-height: calc(100vh - var(--nav-height));
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 20px 60px; /* Aligned with global first-section padding */
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ================= TITLE ================= */
+.section-title {
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 36px;
+  font-weight: 700;
+  color: white;
+}
+
+/* ================= DURATION ================= */
+.course-duration {
+  text-align: center;
+  margin-bottom: 40px;
+  color: rgba(255,255,255,0.75);
+  font-size: 16px;
+}
+
+/* ================= GRID ================= */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px; /* Increased gap between cards */
+}
+
+/* ================= CARD ================= */
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 20px;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure both cards are same height */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.card h3 {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+/* ================= SYLLABUS LIST ================= */
+.syllabus-list {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+}
+
+.syllabus-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Bullet effect */
+.syllabus-list li::before {
+  content: "✔";
+  color: var(--primary);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* ================= PRICE ================= */
+.price-text {
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 20px;
+  color: var(--primary);
+  text-align: center;
+}
+
+/* ================= BUTTON (NEW ADDITION) ================= */
+.course-btn {
+  display: block;
+  margin: 15px auto 0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.course-btn:hover {
+  background: #ff7a18;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-section {
+    padding: 30px 15px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .price-text {
+    font-size: 18px;
+  }
+}
+
+/* ================= IMAGE MIND MAP CONTAINER ================= */
+.mindmap-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}

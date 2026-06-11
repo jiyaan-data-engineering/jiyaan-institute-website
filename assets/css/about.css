@@ -1,0 +1,113 @@
+/* Specific About styles */
+
+body {
+  overflow-x: hidden;
+}
+
+/* ================= SCROLL FIX ================= */
+html {
+  scroll-padding-top: var(--nav-height);
+}
+
+/* ================= SECTION ================= */
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* ================= HEADINGS ================= */
+h1, h2 {
+  font-size: clamp(24px, 4vw, 32px);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+h4 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white
+}
+
+/* ================= PARAGRAPH ================= */
+p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+}
+
+/* ================= GRID ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 25px;
+  margin-top: 30px;
+  padding: 0 15px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================= CARD ================= */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
+
+/* Hover Effect */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.6), 0 0 20px rgba(0, 255, 204, 0.15);
+  border-color: rgba(0, 255, 204, 0.4);
+}
+
+/* ================= SPECIAL CARDS ================= */
+section:last-of-type .card {
+  font-weight: 500;
+  border-left: 4px solid var(--primary);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,240,255,0.05));
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  section {
+    padding: 40px 15px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 18px;
+  }
+}
+
