@@ -1,0 +1,442 @@
+/* ================= GOOGLE FONTS MOVED TO HTML ================= */
+
+:root {
+  --nav-height: 80px;
+  --primary: #00ffcc;
+  --bg-dark: #0a0f1c;
+}
+
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0a0f1c;
+  color: #fff;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Fix header overlap for subpages */
+section:not(.hero):first-of-type {
+  padding-top: 100px; /* Reduced from 120px to avoid 'over gap' */
+}
+
+h1, h2, h3, h4, h5, h6, .brand-text .brand-name, .main-title, .role, .btn, nav a {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 15, 28, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: 0.3s;
+}
+
+.navbar.scrolled {
+  padding: 10px 40px;
+  background: #000;
+}
+
+/* ================= BRAND ================= */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 55px;
+}
+
+/* Glow animation */
+.glow {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px #00ffcc); }
+  to { filter: drop-shadow(0 0 20px #00ffcc); }
+}
+
+.brand-text .brand-name {
+  font-size: 22px;
+  letter-spacing: 2px;
+  display: block;
+}
+
+.brand-text p {
+  font-size: 11px;
+  color: #ccc;
+}
+
+/* Subtitle */
+.sub-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.text {
+  font-size: 10px;
+}
+
+/* Colored lines */
+.lines {
+  display: flex;
+  gap: 4px;
+  width: 120px;
+}
+
+.line {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.blue { background: #3fa9f5; }
+.green { background: #22c55e; }
+.yellow { background: #facc15; }
+.red { background: #ef4444; }
+
+/* ================= NAV LINKS ================= */
+nav {
+  display: flex;
+  gap: 25px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: #00ffcc;
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
+}
+
+/* ================= HAMBURGER ================= */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* ================= HERO ================= */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #050a15; /* Dark background */
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg') no-repeat center center;
+  background-size: min(80vw, 80vh); /* Ensures the full logo is always visible */
+  opacity: 0.2; /* Faint overlay effect */
+  z-index: 0;
+  animation: cloudFloat 8s ease-in-out infinite;
+}
+
+@keyframes cloudFloat {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+
+/* Main title */
+.main-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* Highlight title */
+.highlight {
+  background: linear-gradient(270deg, #38bdf8, #22c55e, #facc15, #ef4444);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientMove 5s ease infinite;
+  text-shadow: 0 0 15px rgba(56,189,248,0.4);
+}
+
+/* Role */
+.role {
+  margin-top: 10px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Skills */
+.skills {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #94a3b8;
+}
+
+/* Buttons */
+.hero-buttons {
+  margin-top: 25px;
+}
+
+.btn {
+  padding: 12px 25px;
+  background: #00ffcc;
+  color: #000;
+  border-radius: 30px;
+  margin: 5px;
+  display: inline-block;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #00ccaa;
+}
+
+.btn.outline {
+  background: transparent;
+  border: 2px solid #00ffcc;
+  color: #00ffcc;
+}
+
+.btn.outline:hover {
+  background: #00ffcc;
+  color: #000;
+}
+
+/* ================= COURSES ================= */
+.courses {
+  padding: 80px 50px;
+  text-align: center;
+}
+
+.courses h2 {
+  margin-bottom: 30px;
+}
+
+.courses .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Scoped card for homepage courses */
+.courses .card {
+  padding: clamp(10px, 2vw, 20px);
+  background: #111827;
+  border-radius: 15px;
+  text-align: center;
+  font-weight: 600;
+  font-size: clamp(14px, 3vw, 18px);
+  transition: 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  display: block;
+}
+
+.courses .card:hover {
+  transform: translateY(-10px);
+  background: #1f2937;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #000;
+  font-size: 14px;
+  margin-top: auto; /* Sticky footer */
+}
+
+/* ================= WHATSAPP ================= */
+.whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: #fff;
+  font-size: 22px;
+  padding: 12px 15px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 0 10px #25d366;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes gradientMove {
+  0% { background-position: 0% }
+  50% { background-position: 100% }
+  100% { background-position: 0% }
+}
+
+/* ================= ULTIMATE UI ================= */
+
+.ultimate-scroll {
+  padding: 80px 0;
+  background: radial-gradient(circle at top, #020617, #000);
+  overflow: hidden;
+}
+
+.scroll-title {
+  text-align: center;
+  font-size: 32px;
+  color: #fff;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* Track */
+.scroll-track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+  animation: ultraScroll 25s linear infinite;
+}
+
+/* CARD */
+.scroll-track .card {
+  position: relative;
+  min-width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+/* Neon Border */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(45deg, #3b82f6, #06b6d4, #9333ea);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  z-index: -1;
+  animation: borderMove 3s linear infinite;
+}
+
+.scroll-track .card img {
+  height: 50px;
+  transition: 0.3s;
+}
+
+.card span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Hover 3D */
+.scroll-track .card:hover {
+  transform: rotateX(10deg) rotateY(10deg) scale(1.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* Animation */
+@keyframes ultraScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Neon animation */
+@keyframes borderMove {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* Pause */
+.ultimate-scroll:hover .scroll-track {
+  animation-play-state: paused;
+}
+
+/* Highlight important services */
+.highlight-card {
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 20px rgba(56,189,248,0.6);
+  transform: scale(1.05);
+}
+
+
+/* Hero background updated above */
+
+
+/* COLORS (CLEANED) */
+.scroll-track .card:nth-child(1) { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #000;}
+.scroll-track .card:nth-child(2) { background: linear-gradient(135deg, #22c55e, #16a34a); color: #000;}
+.scroll-track .card:nth-child(3) { background: linear-gradient(135deg, #ef4444, #dc2626); color: #000;}
+.scroll-track .card:nth-child(4) { background: linear-gradient(135deg, #facc15, #eab308); color: #000;}
+.scroll-track .card:nth-child(5) { background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #000;}
+.scroll-track .card:nth-child(6) { background: linear-gradient(135deg, #a855f7, #9333ea); color: #000;}
+.scroll-track .card:nth-child(7) { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #000;}
+.scroll-track .card:nth-child(8) { background: linear-gradient(135deg, #22c55e, #16a34a); color: #000;}
+.scroll-track .card:nth-child(9) { background: linear-gradient(135deg, #ef4444, #dc2626); color: #000;}
+.scroll-track .card:nth-child(10) { background: linear-gradient(135deg, #facc15, #eab308); color: #000;}
+.scroll-track .card:nth-child(11) { background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #000;}
+.scroll-track .card:nth-child(12) { background: linear-gradient(135deg, #a855f7, #9333ea); color: #000;}

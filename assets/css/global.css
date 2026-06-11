@@ -1,0 +1,177 @@
+/* 
+==================================================
+  GLOBAL OPTIMIZATION & DEVICE RESOLUTION STYLES
+==================================================
+*/
+
+:root {
+  /* Global breakpoints */
+  --container-width-sm: 540px;
+  --container-width-md: 720px;
+  --container-width-lg: 960px;
+  --container-width-xl: 1140px;
+  
+  /* Fluid Typography scaling variables */
+  /* Main Title scales from 2rem (mobile) to 3rem (desktop) */
+  --fluid-main-title: clamp(2rem, 5vw, 3rem);
+  
+  /* Subtitle scales from 1.6rem to 2rem */
+  --fluid-sub-title: clamp(1.6rem, 3vw, 2rem);
+  
+  /* General padding for sections */
+  --section-padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 50px);
+}
+
+/* ==================================================
+   1. Basic CSS Reset & Global Rules
+   ================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px; /* Base font size */
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility; /* Enhances text sharpness and kerning */
+  overflow-x: hidden; /* Prevent horizontal scroll on small devices */
+}
+
+/* Responsive media elements */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto; 
+}
+
+/* Typography reset for form elements */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Global Section Spacing */
+.hero, .courses {
+  padding: var(--section-padding);
+}
+
+/* ==================================================
+   2. Media Queries for Device Resolutions (Mobile First)
+   ================================================== */
+
+/* Mobile (Base) */
+.menu-toggle {
+  display: block; /* Visible by default on mobile */
+}
+
+nav {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  background: #000;
+  width: 100%;
+  flex-direction: column;
+  text-align: center;
+  display: none;
+}
+
+nav.show {
+  display: flex;
+}
+
+nav a {
+  padding: 15px;
+  border-bottom: 1px solid #222;
+}
+
+.main-title {
+  font-size: var(--fluid-main-title) !important;
+}
+
+.hero h2, .role {
+  font-size: var(--fluid-sub-title) !important;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  /* Reset Nav for Tablet/Desktop */
+  .menu-toggle {
+    display: none;
+  }
+  
+  nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    width: auto;
+  }
+  
+  nav a {
+    padding: 0;
+    border-bottom: none;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .hero-content {
+    max-width: 900px; /* Expand hero width slightly for desktop */
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  /* Scale grid gap on ultra-wide screens */
+  .grid {
+    gap: 30px;
+  }
+}
+
+/* ==================================================
+   3. Max-Width Media Queries (Strict Overrides)
+   ================================================== */
+
+/* Max-width: Extra small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .brand-text h1 {
+    font-size: 18px; /* Shrink logo text on very small screens */
+  }
+  .sub-title .lines {
+    width: 100px; /* Shrink lines */
+  }
+  .navbar {
+    padding: 10px 20px; /* Tighter navbar padding */
+  }
+}
+
+/* ==================================================
+   4. High DPI (Retina) Displays
+   ================================================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ==================================================
+   5. Accessibility & User Preferences
+   ================================================== */
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

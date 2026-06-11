@@ -1,0 +1,83 @@
+/* ================= SECTION ================= */
+.course-section {
+  min-height: 100vh;
+  padding: 100px 20px 60px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ================= TITLE ================= */
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: white;
+}
+
+.course-duration {
+  text-align: center;
+  margin-bottom: 40px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ================= CARD ================= */
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+
+  /* 🔥 IMPORTANT FIX */
+  overflow: visible;
+}
+
+.card h3 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* ================= IMAGE WRAPPER ================= */
+.mindmap-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mindmap-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mindmap-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+  transition: transform 0.3s ease;
+}
+
+.mindmap-img:hover {
+  transform: scale(1.02);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 24px;
+  }
+
+  .mindmap-img {
+    max-width: 100%;
+  }
+}

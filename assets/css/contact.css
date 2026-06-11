@@ -1,0 +1,179 @@
+/* Specific Contact styles */
+
+body {
+  overflow-x: hidden;
+}
+
+/* ================= SCROLL FIX ================= */
+html {
+  scroll-padding-top: var(--nav-height);
+}
+
+/* ================= CONTACT SECTION ================= */
+.contact-section {
+  min-height: calc(100vh - var(--nav-height));
+  /* fallback */
+  min-height: calc(100dvh - var(--nav-height));
+  /* modern */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* ================= TITLE ================= */
+.section-title {
+  text-align: center;
+  font-size: clamp(22px, 4vw, 28px);
+  margin-bottom: 25px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ================= FORM ================= */
+.contact-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--glass);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+}
+
+.contact-form:hover {
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* ================= FORM GROUP ================= */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+  opacity: 0.9;
+}
+
+/* ================= INPUT / SELECT / TEXTAREA ================= */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+/* Dark input */
+.form-group input,
+.form-group textarea {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Placeholder fix */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Dropdown */
+.form-group select {
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Focus */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 2px solid var(--primary);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ================= TEXTAREA ================= */
+.form-group textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+/* ================= BUTTON ================= */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border: 1px solid #fff;
+  border-radius: 10px;
+  color: #27b35c;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px var(--primary);
+}
+
+/* Disabled button */
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ================= MESSAGE ================= */
+#formMessage {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Success & Error */
+#formMessage.success {
+  color: #00ffae;
+}
+
+#formMessage.error {
+  color: #ff4d4d;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 30px 15px;
+  }
+
+  .contact-form {
+    padding: 20px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 22px;
+  }
+
+  .contact-form {
+    padding: 18px;
+  }
+}
