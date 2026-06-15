@@ -28,7 +28,7 @@ const socials = [
   { Icon: Youtube, href: "https://www.youtube.com", label: "YouTube" },
   {
     Icon: MessageCircle,
-    href: "https://api.whatsapp.com/send/?phone=919876543210&text&type=phone_number&app_absent=0",
+    href: "https://api.whatsapp.com/send/?phone=919948314189&text&type=phone_number&app_absent=0",
     label: "WhatsApp",
   },
 ]
@@ -85,7 +85,7 @@ export function Footer() {
             <a href="mailto:jiyaan.institute@gmail.com" className="flex items-center gap-2 hover:text-primary">
               <Mail className="h-4 w-4" /> jiyaan.institute@gmail.com
             </a>
-            <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-primary">
+            <a href="tel:+919948314189" className="flex items-center gap-2 hover:text-primary">
               <Phone className="h-4 w-4" /> +91 99483 14189
             </a>
           </div>

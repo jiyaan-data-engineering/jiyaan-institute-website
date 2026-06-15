@@ -90,17 +90,17 @@ export function LeadForm() {
             </ul>
 
             <div className="mt-10 grid gap-4 text-sm sm:grid-cols-2">
-              <a href="tel:+910000000000" className="flex items-center gap-3 text-muted-foreground hover:text-primary">
-                <Phone className="h-4 w-4 text-primary" /> +91 00000 00000
+              <a href="tel:+919948314189" className="flex items-center gap-3 text-muted-foreground hover:text-primary">
+                <Phone className="h-4 w-4 text-primary" /> +91 99483 14189
               </a>
               <a
-                href="mailto:hello@jiyaan.com"
+                href="mailto:jiyaan.institute@gmail.com"
                 className="flex items-center gap-3 text-muted-foreground hover:text-primary"
               >
-                <Mail className="h-4 w-4 text-primary" /> hello@jiyaan.com
+                <Mail className="h-4 w-4 text-primary" /> jiyaan.institute@gmail.com
               </a>
               <span className="flex items-center gap-3 text-muted-foreground sm:col-span-2">
-                <MapPin className="h-4 w-4 text-primary" /> Online &amp; Classroom batches across India
+                <MapPin className="h-4 w-4 text-primary" /> Online &amp; Classroom batches across Telugu States
               </span>
             </div>
           </div>

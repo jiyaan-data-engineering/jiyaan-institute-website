@@ -8,13 +8,13 @@ import { getNextBatchMonthYear, getDemoDatesList } from "@/utils/demo-dates"
 const stats = [
   {
     icon: Users,
-    value: "500+",
+    value: "300+",
     label: "Students Trained",
     subtext: "From beginners to advanced professionals",
   },
   {
     icon: TrendingUp,
-    value: "95%",
+    value: "85%",
     label: "Placement Success",
     subtext: "Industry-leading guarantee",
   },
@@ -73,7 +73,7 @@ export function TrackRecord() {
           eyebrow="Proven Track Record"
           title={
             <>
-              Why <span className="gradient-cyan">Top 500+ Students</span> Trust Us
+              Why <span className="gradient-cyan">Top 300+ Students</span> Trust Us
             </>
           }
           subtitle="Real outcomes with measurable results from students who started exactly where you are"
@@ -124,7 +124,7 @@ export function TrackRecord() {
               <div>
                 <p className="text-4xl font-bold text-cyan">⭐ 4.9/5</p>
                 <p className="mt-1 text-sm font-semibold">Course Rating</p>
-                <p className="text-xs text-muted-foreground">From 500+ alumni</p>
+                <p className="text-xs text-muted-foreground">From 300+ alumni</p>
               </div>
               <div className="border-l border-r border-border">
                 <p className="text-4xl font-bold text-cyan">📈 10+ LPA</p>

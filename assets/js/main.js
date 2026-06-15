@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Advanced Anti-Scraping (Base64 + String Reversal)
   const waBtn = document.getElementById('secure-wa');
   if (waBtn) {
-    // 'MDEyMzQ1Njc4OTE5L2VtLmF3Ly86c3B0dGg=' decodes to '012345678919/em.aw//:sptth'
-    // Reversed: 'https://wa.me/919876543210'
-    const payload = atob('MDEyMzQ1Njc4OTE5L2VtLmF3Ly86c3B0dGg=');
+    // 'ODE5NDEzNzM4NDkvZW0uYXcvLzpzcHR0aA==' decodes to '0919413738491/em.aw//:sptth'
+    // Reversed: 'https://wa.me/919948314189'
+    const payload = atob('ODE5NDEzNzM4NDkvZW0uYXcvLzpzcHR0aA==');
     waBtn.href = payload.split('').reverse().join('');
   }
 

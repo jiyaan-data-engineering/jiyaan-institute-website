@@ -57,7 +57,7 @@ export function WhyChooseJiyaan() {
           eyebrow="Why Jiyaan?"
           title={
             <>
-              Why <span className="gradient-cyan">Top 500+ Students</span> Choose Us
+              Why <span className="gradient-cyan">Top 300+ Students</span> Choose Us
             </>
           }
           subtitle="Industry-leading training with proven track record of placements and salary hikes"
@@ -90,7 +90,7 @@ export function WhyChooseJiyaan() {
           <div className="mt-16 rounded-lg border border-cyan/20 bg-gradient-to-r from-cyan/5 to-google-blue/5 p-6 text-center sm:p-8">
             <p className="text-sm font-semibold text-cyan">✨ TRUSTED BY</p>
             <p className="mt-2 font-display text-2xl font-bold">
-              500+ Students | 95% Placements | 10+ LPA Average Salary
+              300+ Students | 85% Placements | 10+ LPA Average Salary
             </p>
             <p className="mt-2 text-sm text-muted-foreground">Join the fastest-growing GCP training institute in India</p>
           </div>

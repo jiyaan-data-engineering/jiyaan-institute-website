@@ -16,9 +16,9 @@ const skills = [
 ]
 
 const stats = [
-  { icon: GraduationCap, value: "500+", label: "Students Trained" },
-  { icon: Briefcase, value: "95%", label: "Placement Rate" },
-  { icon: TrendingUp, value: "15+ LPA", label: "Avg. Salary" },
+  { icon: GraduationCap, value: "300+", label: "Students Trained" },
+  { icon: Briefcase, value: "85%", label: "Placement Rate" },
+  { icon: TrendingUp, value: "10+ LPA", label: "Avg. Salary" },
   { icon: Clock, value: "90 Days", label: "Job-Ready Program" },
 ]
 
@@ -44,7 +44,7 @@ export function Hero() {
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-cyan">
             <span className="h-2 w-2 animate-pulse rounded-full bg-cyan" />
-            India&apos;s Premier GCP Data Engineering Institute
+            Hyderabad&apos;s best gcp data ENgineering Institute
           </span>
         </Reveal>
 
