@@ -67,7 +67,7 @@ const config: Config = {
         "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) both",
         float: "float 4s ease-in-out infinite",
         shine: "shine 3s ease-in-out infinite",
-        marquee: "marquee 40s linear infinite",
+        marquee: "marquee 80s linear infinite",
       },
     },
   },
