@@ -58,11 +58,11 @@ export function Companies() {
         {/* edge fades */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
-        <div className="flex w-max animate-marquee gap-4 hover:[animation-play-state:paused]">
+        <div className="flex w-max animate-marquee gap-8 hover:[animation-play-state:paused]">
           {loop.map((c, i) => (
             <div
               key={`${c}-${i}`}
-              className="grid h-20 w-40 shrink-0 place-items-center rounded-xl border border-cyan/20 bg-cyan/[0.06] px-4 text-center font-display text-sm font-bold text-foreground transition-colors hover:border-cyan/60 hover:bg-cyan/10"
+              className="grid h-24 w-48 shrink-0 place-items-center rounded-xl border border-cyan/20 bg-cyan/[0.06] px-6 text-center font-display text-base font-bold text-foreground transition-colors hover:border-cyan/60 hover:bg-cyan/10"
             >
               {c}
             </div>
