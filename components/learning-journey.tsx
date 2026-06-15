@@ -59,7 +59,7 @@ const summaryStats = [
   { icon: "⏱️", value: "90 Days", label: "Complete Program" },
   { icon: "🎯", value: "9+ Skills", label: "Master All Tools" },
   { icon: "💼", value: "Real Projects", label: "Hands-on Experience" },
-  { icon: "💰", value: "15+ LPA", label: "Average Salary" },
+  { icon: "💰", value: "10+ LPA", label: "Average Salary" },
 ]
 
 export function LearningJourney() {
@@ -77,10 +77,10 @@ export function LearningJourney() {
         />
 
         {/* Timeline */}
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {phases.map((p, i) => (
             <Reveal key={p.phase} delay={i * 70}>
-              <div className="card-base border-2 border-cyan/20 p-6 transition-all hover:border-cyan/60 hover:-translate-y-2">
+              <div className="card-base border-2 border-cyan/20 p-6 transition-all hover:border-cyan/60 hover:-translate-y-2 h-full flex flex-col">
                 {/* Phase badge */}
                 <div className="inline-block rounded-full bg-cyan/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-cyan">
                   {p.phase}
@@ -107,7 +107,7 @@ export function LearningJourney() {
                 </div>
 
                 {/* Progress bar */}
-                <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-border">
+                <div className="mt-auto pt-4 h-1.5 w-full overflow-hidden rounded-full bg-border">
                   <div className="h-full w-full bg-gradient-to-r from-cyan to-google-blue" />
                 </div>
                 <p className="mt-1 text-xs font-semibold text-cyan">100% Complete</p>
