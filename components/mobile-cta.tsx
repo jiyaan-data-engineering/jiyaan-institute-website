@@ -22,7 +22,7 @@ export function MobileCta() {
       }`}
     >
       <a
-        href="tel:+910000000000"
+        href="tel:+919948314189"
         className="flex flex-1 items-center justify-center gap-2 rounded-full border border-border py-3 text-sm font-semibold"
       >
         <Phone className="h-4 w-4 text-primary" /> Call

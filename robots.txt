@@ -4,13 +4,21 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /config/
-Disallow: /*?* (disallow crawl of URL parameters to avoid duplicate content)
+Disallow: /_next/
+Disallow: /*?*
 
 # Specific Bot Settings
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 2
 
-Sitemap: https://jiyaaninstitute.in/sitemap.xml
+User-agent: Slurp
+Allow: /
+
+# Sitemaps
+Sitemap: https://www.jiyaaninstitute.com/sitemap.xml
+Sitemap: https://www.jiyaaninstitute.com/sitemap-courses.xml

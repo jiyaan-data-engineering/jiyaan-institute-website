@@ -14,7 +14,7 @@ const cards = [
   {
     icon: CheckCircle2,
     title: "GOOD Months",
-    months: "Apr · Jul · Aug · Sep",
+    months: "Apr · May · Jul · Aug · Oct",
     activity: "Good hiring activity",
     badge: "Favorable",
     accent: "var(--google-blue)",
@@ -22,7 +22,7 @@ const cards = [
   {
     icon: AlertTriangle,
     title: "SLOW Months",
-    months: "Jun · Nov · Dec",
+    months: "Jun · Sep · Nov · Dec",
     activity: "Avoid job switching",
     badge: "Not Recommended",
     accent: "var(--google-yellow)",
