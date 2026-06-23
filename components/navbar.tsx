@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Linkedin, Instagram, Youtube, MessageCircle } from "lucide-react"
 
 const links = [
   { label: "Home", href: "#home" },
@@ -11,6 +11,13 @@ const links = [
   { label: "Curriculum", href: "#curriculum" },
   { label: "Success", href: "#success" },
   { label: "Contact", href: "#enroll" },
+]
+
+const socialLinks = [
+  { Icon: Linkedin, href: "https://in.linkedin.com/in/jiyaan-institute", label: "LinkedIn" },
+  { Icon: Instagram, href: "https://www.instagram.com", label: "Instagram" },
+  { Icon: Youtube, href: "https://www.youtube.com", label: "YouTube" },
+  { Icon: MessageCircle, href: "https://api.whatsapp.com/send/?phone=919948314189&text&type=phone_number&app_absent=0", label: "WhatsApp" },
 ]
 
 export function Navbar() {
@@ -62,7 +69,22 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
+          {/* Social Links */}
+          <div className="flex items-center gap-2 border-l border-cyan/20 pl-4">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan/30 text-cyan transition-all hover:border-cyan hover:bg-cyan/10"
+              >
+                <social.Icon size={18} />
+              </a>
+            ))}
+          </div>
           <a
             href="#enroll"
             className="btn bg-cyan text-background hover:bg-cyan-deep hover:shadow-[0_8px_30px_rgba(0,255,204,0.35)]"
@@ -96,6 +118,23 @@ export function Navbar() {
                 {l.label}
               </a>
             ))}
+            <div className="border-t border-cyan/15 my-3 pt-3">
+              <p className="px-4 pb-2 text-xs font-medium text-muted uppercase tracking-wider">Follow Us</p>
+              <div className="flex gap-2 px-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan/30 text-cyan transition-all hover:border-cyan hover:bg-cyan/10"
+                  >
+                    <social.Icon size={18} />
+                  </a>
+                ))}
+              </div>
+            </div>
             <a
               href="#enroll"
               onClick={() => setOpen(false)}
