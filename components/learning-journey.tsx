@@ -6,7 +6,7 @@ import { CheckCircle2, Database, Code, Layers, Cloud, Briefcase } from "lucide-r
 
 const phases = [
   {
-    phase: "Days 1-30",
+    phase: "Days 1-15",
     icon: Database,
     title: "SQL Fundamentals",
     description: "Database basics, SQL queries, and data manipulation",
@@ -14,7 +14,7 @@ const phases = [
     progress: 100,
   },
   {
-    phase: "Days 31-45",
+    phase: "Days 16-30",
     icon: Code,
     title: "Python & Data Processing",
     description: "Programming, data structures, Pandas, NumPy",
@@ -22,7 +22,7 @@ const phases = [
     progress: 100,
   },
   {
-    phase: "Days 46-60",
+    phase: "Days 31-46",
     icon: Layers,
     title: "Big Data & PySpark",
     description: "Distributed computing, Hadoop, Spark, data modeling",
@@ -30,7 +30,7 @@ const phases = [
     progress: 100,
   },
   {
-    phase: "Days 61-75",
+    phase: "Days 47-60",
     icon: Cloud,
     title: "GCP Cloud Platform",
     description: "Cloud services, BigQuery, Dataflow, Pub/Sub",
@@ -38,7 +38,7 @@ const phases = [
     progress: 100,
   },
   {
-    phase: "Days 76-85",
+    phase: "Days 61-76",
     icon: Code,
     title: "DevOps & Tools",
     description: "Linux, Git, Jira, CI/CD pipelines, best practices",
@@ -46,7 +46,7 @@ const phases = [
     progress: 100,
   },
   {
-    phase: "Days 86-90",
+    phase: "Days 77-90",
     icon: Briefcase,
     title: "Interview & Job Ready",
     description: "Resume building, mock interviews, placement prep",
