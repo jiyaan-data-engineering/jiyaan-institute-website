@@ -718,6 +718,38 @@
   }
   initRoadArt();
 
+
+  /* ---------- Offers by company: logos in bubbles, count-up on view ---------- */
+  logosReady.then((logos) => {
+    $$(".ob-disc[data-company]").forEach((el) => {
+      const name = el.dataset.company;
+      const logo = logos[slugify(name)];
+      if (logo) el.innerHTML = `<img src="${esc(logo)}" alt="${esc(name)} logo" loading="lazy">`;
+    });
+  });
+
+  const cloud = $(".offer-cloud");
+  if (cloud) {
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        countObs.unobserve(entry.target);
+        $$(".ob-count", entry.target).forEach((el) => {
+          const target = Number(el.dataset.count);
+          if (reduceMotion) { el.textContent = target; return; }
+          const start = performance.now();
+          const tick = (now) => {
+            const t = Math.max(0, Math.min((now - start) / 900, 1));
+            el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          setTimeout(() => requestAnimationFrame(tick), 300);
+        });
+      });
+    }, { threshold: 0.2 });
+    countObs.observe(cloud);
+  }
+
   /* ---------- Initial data ---------- */
 
   $("#year").textContent = new Date().getFullYear();

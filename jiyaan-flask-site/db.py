@@ -116,6 +116,20 @@ TESTIMONIALS = [
     ("Challenging interview met with excellent mock interview prep. Ready for anything!", "K Sri Harsha", "Data Engineer @ VSPL"),
     ("Advanced GCP architecture modules and mentorship took my career to senior level. Leading cloud infrastructure at Crown Solution!", "B Srinu", "Senior GCP Engineer @ Crown Solution"),
     ("From basics to production-ready data engineer. This course's hands-on approach and mentorship made all the difference in my career!", "P Amarnath", "GCP Data Engineer"),
+    ('I am very happy to share that I have received an offer from TCS as a Data Engineer. A big thank you to Jiyaan Institute for giving me the right guidance, support, and confidence to improve my skills.', 'Jiyaan learner', 'Data Engineer @ TCS'),
+    ('I am very happy to share that I have received an offer from Deloitte as a Lead Data Engineer. A big thank you to Jiyaan Institute for giving me the right guidance, support, and confidence to improve my skills.', 'Jiyaan learner', 'Lead Data Engineer @ Deloitte'),
+    ('I have received an offer from HCL as a Data & AI Engineer. A big thank you to Jiyaan Institute for giving me the right guidance, support, and confidence to improve my skills.', 'Jiyaan learner', 'Data & AI Engineer @ HCL'),
+    ('I am delighted to share that I have received an offer from Tech sys as a senior data engineer. A heartfelt thank you to Jiyaan Institute for providing excellent guidance, continuous support, and the right platform to build my skills and confidence.', 'A Venkata Kiran', 'Senior Data Engineer @ Tech sys'),
+    ('Successfully secured a job offer from Deloitte with a package of 12 LPA! Thank you all for your constant support in making this achievement possible.', 'Kiran', 'Data Engineer @ Deloitte'),
+    ("I've been selected for a senior consultant - GCP role at AbsoluteLabs! This achievement means a lot to me, and I'm truly grateful to Jiyaan Institute for the right guidance, training, and support.", 'Jiyaan learner', 'Senior Consultant - GCP @ Absolute Labs Consulting'),
+    ('I am delighted to share that I have received an offer from Tata Consultancy Services (TCS) as an IT Analyst. A heartfelt thank you to Jiyaan Institute for providing excellent guidance, continuous support, and the right platform to build my skills and confidence.', 'C Manoj Kumar Varma', 'IT Analyst @ TCS'),
+    ("I'm overflowing with gratitude to share that I've been selected for a GCP Data Engineer role at TCS! I genuinely couldn't have reached this milestone without you.", 'Jiyaan learner', 'GCP Data Engineer @ TCS'),
+    ('Your help and motivation have played a major role in helping me grow and secure a better opportunity with a Top 4 company (Deloitte).', 'Jiyaan learner', 'Learner @ Deloitte'),
+    ('Got selected in Tech Mahindra. Thank you Satish, Lohith and Shiva bro.', 'Jiyaan learner', 'Learner @ Tech Mahindra'),
+    ("I have received two job offers from HCLTech and Capgemini today and I'm truly grateful to everyone who supported me throughout this journey.", 'T Chittala', 'Job offers @ HCLTech & Capgemini'),
+    ("I'm delighted and grateful to share that I have been selected for a Data Engineer role at Capgemini! I'm truly thankful to everyone who supported, guided, and encouraged me throughout this journey.", 'Jiyaan learner', 'Data Engineer @ Capgemini'),
+    ("I have received a job offer from HCLTech today! This is a very special moment in my career, and I'm truly grateful to everyone who supported me throughout this journey.", 'V Dombale', 'Batch 10 learner @ HCLTech'),
+    ("I've received an offer from Deloitte. This is a very special milestone for me, and I'm truly thankful to everyone who supported me throughout this journey.", 'Jiyaan learner', 'Learner @ Deloitte'),
 ]
 
 
