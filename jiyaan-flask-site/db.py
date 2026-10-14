@@ -75,9 +75,9 @@ BATCHES = [
 ]
 
 PRICING = [
-    ("Self-Paced", 14999, 19999, "Lifetime access", "All recorded modules, Hands-on labs, Community forum, Certificate of completion", 0, 1),
-    ("Live Online Batch", 34999, 44999, "12 weeks", "Live instructor classes, Weekly hands-on labs, Mock exams, Resume and interview prep, Certificate of completion", 1, 2),
-    ("Career Accelerator", 59999, 79999, "16 weeks", "Everything in Live Online, One-to-one mentoring, Capstone project with GCP credits, Placement assistance, Mock interviews", 0, 3),
+    ('Self-Paced', 14999, 19999, 'Lifetime access', 'All recorded modules, Hands-on live class, No placement/interview support, No job support', 0, 1),
+    ('Live Online Batch', 34999, 44999, '12 weeks', 'Live instructor classes, Weekly hands-on labs, Mock exams, Resume and interview prep, Placement/interview support, Job support', 1, 2),
+    ('Career Accelerator', 59999, 79999, '16 weeks', 'Everything in Live Online, One-to-one mentoring, Capstone project with GCP credits, Placement assistance, Mock interviews', 0, 3),
 ]
 
 TESTIMONIALS = [
