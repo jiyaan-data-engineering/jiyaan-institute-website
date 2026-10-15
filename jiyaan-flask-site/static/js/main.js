@@ -83,23 +83,39 @@
   }
 
   function renderBatches(batches) {
-    $("#batchesGrid").innerHTML = batches.map((b) => {
-      const pct = Math.round((b.seats_left / 30) * 100);
+    const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const nowMonth = new Date().getMonth();
+    const info = batches.map((b) => {
+      const m = parseInt(b.start_date.slice(5, 7), 10) - 1;
+      return { b, m, monthName: MONTHS[m], diff: (m - nowMonth + 12) % 12 };
+    });
+    const sorted = [...info].sort((x, y) => x.diff - y.diff);
+    const next = sorted[0];
+    const alert = $("#batchAlert");
+    if (alert && next) {
+      alert.innerHTML = next.diff === 0
+        ? `<span class="ba-dot"></span><strong>Starting soon:</strong> ${esc(next.monthName)} batch is going to start this month.`
+        : `<span class="ba-dot"></span><strong>Upcoming batch:</strong> ${esc(next.monthName)} is going to start.`;
+      alert.hidden = false;
+    }
+    $("#batchesGrid").innerHTML = info.map((x, i) => {
+      const seats = x.b.seats_left;
+      const pct = Math.max(0, Math.min(100, Math.round((seats / 30) * 100)));
+      const badge = x.diff === 0 ? '<span class="bt-status soon">Starting soon</span>'
+                  : x.diff === 1 ? '<span class="bt-status next">Next</span>' : "";
       return `
-      <article class="batch-card" data-reveal>
-        <span class="batch-mode">${esc(b.mode)}</span>
-        <h3>${esc(b.name)}</h3>
-        <dl>
-          <dt>Starts</dt><dd>${esc(new Date(b.start_date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }))}</dd>
-          <dt>Timing</dt><dd>${esc(b.timing)}</dd>
-        </dl>
-        <div class="seats">
-          <div class="seats-bar"><span data-width="${Math.min(100, pct)}"></span></div>
-          <small>${esc(b.seats_left)} seats left</small>
+      <article class="bt-card bt-${i % 3}${x.diff === 0 ? " is-soon" : ""}" data-reveal>
+        ${badge}
+        <span class="bt-mode">${esc(x.b.mode)}</span>
+        <div class="bt-month">${esc(x.monthName)}</div>
+        <span class="bt-label">Batch</span>
+        <div class="bt-ring" style="--p:${pct}">
+          <div class="bt-ring-inner"><strong>${esc(seats)}</strong><small>seats</small></div>
         </div>
+        <p class="bt-limit">Limited seats</p>
       </article>`;
     }).join("");
-    staggerReveal("#batchesGrid .batch-card");
+    staggerReveal("#batchesGrid .bt-card");
   }
 
   function renderPricing(plans) {
@@ -647,30 +663,45 @@
   function initRoadArt() {
     const path = $("#roadPath");
     const group = $("#roadStops");
+    const walker = $(".road-walker");
+    const art = $(".road-art");
     if (!path || !group) return;
     const NS = "http://www.w3.org/2000/svg";
+    // Each stop: [title, detail]. A stop's label appears only when the walker reaches it.
     const stops = [
-      ["Jiyaan Institute", "Day 0"], ["SQL Analyst", "Days 1–15"], ["Python Coder", "Days 16–30"],
-      ["Spark Engineer", "Days 31–46"], ["GCP Builder", "Days 47–60"],
-      ["DevOps Ready", "Days 61–76"], ["MNC Job Offer", "Day 90"],
+      ["Jiyaan Institute", "Day 0 \u00b7 Start your journey"],
+      ["SQL Analyst", "Days 1\u201315 \u00b7 Pro in SQL and coding"],
+      ["Python Coder", "Days 16\u201330 \u00b7 Writes Python scripts"],
+      ["Spark Engineer", "Days 31\u201346 \u00b7 PySpark and data engineering"],
+      ["GCP Data Engineer", "Days 47\u201360 \u00b7 GCP cloud pipelines"],
+      ["Job-Ready", "Days 61\u201376 \u00b7 Naukri, resume and LinkedIn"],
+      ["Interviews", "Days 77\u201390 \u00b7 Attending interviews"],
+      ["MNC Job Offer", "Offer from an MNC company"],
     ];
-    const colors = ["#8ab4f8", "#4285f4", "#34a853", "#fbbc05", "#ea4335", "#4285f4", "#34a853"];
+    const colors = ["#8ab4f8", "#4285f4", "#34a853", "#fbbc05", "#ea4335", "#4285f4", "#34a853", "#ea4335"];
     const total = path.getTotalLength();
-    const fractions = [0.05, 0.2, 0.36, 0.52, 0.68, 0.84, 0.97];
+    const fractions = [0.03, 0.163, 0.296, 0.429, 0.561, 0.694, 0.827, 0.96];
+    const last = stops.length - 1;
+    const points = [];
+    const stopEls = [];
 
-    stops.forEach(([name, days], i) => {
+    stops.forEach(([name, sub], i) => {
       const pt = path.getPointAtLength(total * fractions[i]);
-      // Labels for stops 2 and 4 sit above the road; the rest sit below, which keeps stops 6 and 7 apart.
-      const above = i === 1 || i === 3;
+      points.push(pt);
+      const isLast = i === last;
+      const above = i % 2 === 1;
+      const anchorX = isLast ? pt.x - 34 : pt.x;
+      const anchor = isLast ? "end" : "middle";
+      const labelY = above ? pt.y - 52 : pt.y + 62;
+
       const g = document.createElementNS(NS, "g");
       g.setAttribute("class", "road-stop");
-      g.style.setProperty("--i", i);
-      g.setAttribute("transform-origin", `${pt.x} ${pt.y}`);
+      g.setAttribute("data-stop", String(i));
 
       const circle = document.createElementNS(NS, "circle");
       circle.setAttribute("cx", pt.x);
       circle.setAttribute("cy", pt.y);
-      circle.setAttribute("r", 26);
+      circle.setAttribute("r", 24);
       circle.setAttribute("class", "road-stop-circle");
       circle.setAttribute("fill", colors[i]);
       g.appendChild(circle);
@@ -680,14 +711,9 @@
       num.setAttribute("y", pt.y + 8);
       num.setAttribute("text-anchor", "middle");
       num.setAttribute("class", "road-stop-num");
-      num.textContent = String(i + 1);
+      num.textContent = i === 0 ? "S" : i === last ? "\u2605" : String(i);
       g.appendChild(num);
 
-      const last = i === stops.length - 1;
-      // The last stop's label sits to the left, so it doesn't collide with the flag or stop 6.
-      const anchorX = last ? pt.x - 34 : pt.x;
-      const anchor = last ? "end" : "middle";
-      const labelY = above ? pt.y - 52 : pt.y + 62;
       const label = document.createElementNS(NS, "text");
       label.setAttribute("x", anchorX);
       label.setAttribute("y", labelY);
@@ -696,18 +722,19 @@
       label.textContent = name;
       g.appendChild(label);
 
-      const sub = document.createElementNS(NS, "text");
-      sub.setAttribute("x", anchorX);
-      sub.setAttribute("y", labelY + (above ? -20 : 22));
-      sub.setAttribute("text-anchor", anchor);
-      sub.setAttribute("class", "road-label-days");
-      sub.textContent = days;
-      g.appendChild(sub);
+      const subEl = document.createElementNS(NS, "text");
+      subEl.setAttribute("x", anchorX);
+      subEl.setAttribute("y", labelY + (above ? -20 : 22));
+      subEl.setAttribute("text-anchor", anchor);
+      subEl.setAttribute("class", "road-label-days");
+      subEl.textContent = sub;
+      g.appendChild(subEl);
 
       group.appendChild(g);
+      stopEls.push(g);
     });
 
-    // Finish flag drawn at the end of the road (pole and pennant, no font glyph).
+    // Finish flag at the end of the road.
     const end = path.getPointAtLength(total);
     const flag = document.createElementNS(NS, "g");
     flag.setAttribute("class", "road-finish");
@@ -715,6 +742,87 @@
       `<line x1="${end.x}" y1="${end.y}" x2="${end.x}" y2="${end.y - 74}" stroke="#eef2ff" stroke-width="4" stroke-linecap="round"/>` +
       `<polygon points="${end.x},${end.y - 74} ${end.x + 46},${end.y - 62} ${end.x},${end.y - 50}" fill="#34a853"/>`;
     group.appendChild(flag);
+
+    if (!walker) return;
+    const place = (pt) => walker.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
+    const pos = (f) => path.getPointAtLength(total * f);
+    const showStop = (i) => stopEls[i].classList.add("shown");
+    const hideFrom = (i) => stopEls.forEach((el, k) => { if (k >= i) el.classList.remove("shown"); });
+
+    showStop(0);
+    if (reduceMotion) {
+      stopEls.forEach((el) => el.classList.add("shown"));
+      place(points[last]);
+      return;
+    }
+
+    // Walk stop to stop. A stop's label appears on arrival. The final arrival triggers the celebration.
+    const legs = [{ type: "stop", at: fractions[0], dur: 900 }];
+    for (let i = 1; i <= last; i++) {
+      legs.push({ type: "move", from: fractions[i - 1], to: fractions[i], dur: 1800, show: i });
+      legs.push({ type: "stop", at: fractions[i], dur: i === last ? 1800 : 900, final: i === last });
+    }
+
+    function celebrate() {
+      if (!art || art.querySelector(".celebrate")) return;
+      const box = document.createElement("div");
+      box.className = "celebrate";
+      box.innerHTML = '<div class="cel-msg">Congratulations! Your MNC job offer is here</div>';
+      const colors2 = ["#4285f4", "#34a853", "#fbbc05", "#ea4335", "#ffffff"];
+      for (let k = 0; k < 80; k++) {
+        const sp = document.createElement("span");
+        sp.className = "cel-spark";
+        sp.style.setProperty("--x", (Math.random() * 100) + "%");
+        sp.style.setProperty("--dx", ((Math.random() - 0.5) * 360) + "px");
+        sp.style.setProperty("--dy", (-(Math.random() * 300 + 80)) + "px");
+        sp.style.setProperty("--c", colors2[k % colors2.length]);
+        sp.style.setProperty("--d", (Math.random() * 0.5) + "s");
+        sp.style.setProperty("--r", ((Math.random() * 720) - 360) + "deg");
+        box.appendChild(sp);
+      }
+      art.appendChild(box);
+      setTimeout(() => box.remove(), 5000);
+    }
+
+    let legIndex = 0;
+    let legStart = null;
+    function step(now) {
+      if (legStart === null) legStart = now;
+      const leg = legs[legIndex];
+      const t = Math.min((now - legStart) / leg.dur, 1);
+      if (leg.type === "move") {
+        const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        place(pos(leg.from + (leg.to - leg.from) * e));
+      } else {
+        place(pos(leg.at));
+      }
+      if (t >= 1) {
+        if (leg.show !== undefined) showStop(leg.show);
+        if (leg.type === "stop" && leg.final) celebrate();
+        legIndex++;
+        legStart = now;
+        if (legIndex >= legs.length) {
+          // Pause after the celebration, then replay the journey from the start.
+          setTimeout(() => {
+            hideFrom(1);
+            legIndex = 0;
+            legStart = null;
+            requestAnimationFrame(step);
+          }, 6000);
+          return;
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    place(pos(fractions[0]));
+    const startObs = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        startObs.disconnect();
+        setTimeout(() => requestAnimationFrame(step), 800);
+      }
+    }, { threshold: 0.3 });
+    startObs.observe(art);
   }
   initRoadArt();
 
@@ -749,6 +857,243 @@
     }, { threshold: 0.2 });
     countObs.observe(cloud);
   }
+
+
+  /* ---------- Syllabus panels (SQL, Python) ---------- */
+
+  const SYLLABUS = {
+    sql: {
+      kicker: "SQL syllabus",
+      title: "From first query to window functions",
+      root: "SQL",
+      branches: [
+        { label: "Basics", sub: "Read, write and shape data", color: "#4285f4", items: ["SELECT", "CREATE", "INSERT", "UPDATE", "ALTER", "DELETE", "TRUNCATE", "DROP", "DESCRIBE", "WHERE", "DISTINCT", "LIMIT", "LIKE", "ORDER BY", "IN", "BETWEEN", "AS", "SUM()", "MAX()", "MIN()", "AVG()", "COUNT()", "GROUP BY", "HAVING", "UNION", "UNION ALL", "IS NULL", "NOT NULL", "CASE"] },
+        { label: "Intermediate", sub: "Combine tables and reuse logic", color: "#34a853", items: ["3 JOIN", "SUBQUERYS", "CTE's", "VIEW's"] },
+        { label: "Data Engineer", sub: "Rank, compare and analyse over rows", color: "#fbbc05", items: ["WINDOWS FUNCTIONS", "ROW_NUMBER()", "RANK()", "DENSE_RANK()", "LAG(column, n)", "LEAD(column, n)"] },
+      ],
+    },
+    python: {
+      kicker: "Python syllabus",
+      title: "From first line of code to data analysis",
+      root: "Python",
+      branches: [
+        { label: "Basics", sub: "Core language building blocks", color: "#4285f4", items: ["Variables", "Datatypes", "Operators", "Conditional Statements (if, elif, else)", "Loops", "Functions", "Exception handling"] },
+        { label: "Advanced", sub: "Structures, functions and files", color: "#34a853", items: ["Data Structures", "Lambda Functions", "Map Function", "Generators", "Iterators", "Decorators", "File Operation: Read and Write Files", "Importing Modules and Packages"] },
+        { label: "Data Engineer", sub: "Pandas for real datasets", color: "#fbbc05", items: ["Pandas", "DataFrame", "Data Manipulation", "Data Analysis"] },
+      ],
+    },
+    bigdata: {
+      kicker: "Big Data syllabus",
+      title: "From the 5 Vs to cloud data platforms",
+      root: "Big Data",
+      branches: [
+        { label: "Basics", sub: "Concepts, sizes and data types", color: "#4285f4", items: ["Volume", "Velocity", "Variety", "Veracity", "Value", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "BB", "Geopbyte", "Batch processing", "Streaming", "Structured data", "Semi-structured data", "Unstructured data", "OLTP", "OLAP"] },
+        { label: "Advanced", sub: "File formats, pipelines and storage", color: "#34a853", items: ["CSV", "JSON", "Parquet", "ORC", "Avro", "ETL", "ELT", "Data Lake", "Data Warehouse", "Lakehouse", "Data Ingestion", "Storage", "Processing", "Consumption layers"] },
+        { label: "Data Engineer", sub: "Hadoop, distributed storage and cloud", color: "#fbbc05", items: ["Distributed", "Partitioning", "Scalability", "Replication", "Fault tolerance", "High availability", "Moving computation", "HDFS", "GCS", "S3", "ADF", "AWS 2006", "Alibaba 2009", "Azure 2010", "Oracle 2016", "IBM 2017", "GCP 2016-2018"] },
+      ],
+    },
+    pyspark: {
+      kicker: "PySpark syllabus",
+      title: "From Spark basics to optimised pipelines",
+      root: "PySpark",
+      branches: [
+        { label: "Basics", sub: "What Spark is and how it works", color: "#4285f4", items: ["Spark & its Features", "Features of Apache Spark", "Spark Architecture Overview", "Resilient Distributed Dataset (RDD)"] },
+        { label: "Advanced", sub: "Transform, plan and act on data", color: "#34a853", items: ["Spark's Query Plans", "Transformations", "Narrow Transformations", "Wide Transformations", "Repartition", "Coalesce", "Actions"] },
+        { label: "Data Engineer", sub: "Execution graphs and tuning", color: "#fbbc05", items: ["DAG", "Spark Optimization Techniques"] },
+      ],
+    },
+    gcp: {
+      kicker: "GCP syllabus",
+      title: "From cloud storage to data pipelines on Google Cloud",
+      root: "GCP Cloud",
+      branches: [
+        { label: "Basics", sub: "Storage, databases and serverless", color: "#4285f4", items: ["Serverless Cloud Functions", "Cloud Storage", "Cloud SQL"] },
+        { label: "Advanced", sub: "Warehousing and analytics", color: "#34a853", items: ["BigQuery", "Looker"] },
+        { label: "Data Engineer", sub: "Pipelines, processing and governance", color: "#fbbc05", items: ["Dataflow", "Dataproc", "Dataproc Serverless", "Pub/Sub", "Composer (Airflow)", "Cloud IAM"] },
+      ],
+    },
+    datamodel: {
+      kicker: "Data Modelling syllabus",
+      title: "From star schemas to slowly changing dimensions",
+      root: "Data Modelling",
+      branches: [
+        { label: "Basics", sub: "Core warehouse design", color: "#4285f4", items: ["Star Schema"] },
+        { label: "Advanced", sub: "Normalised dimension design", color: "#34a853", items: ["Snowflake Schema"] },
+        { label: "Data Engineer", sub: "Tracking history over time", color: "#fbbc05", items: ["Slowly Changing Dimensions (SCD)"] },
+      ],
+    },
+    devops: {
+      kicker: "Developer Skills syllabus",
+      title: "From Git basics to agile teamwork",
+      root: "DevOps & Tools",
+      branches: [
+        { label: "Git Foundations", sub: "Commands, branches and remotes", color: "#4285f4", items: ["git init", "git clone", "git status", "git add", "git commit", "git log", "git diff", "git restore", "git reset", "git checkout", "git branch", "git switch", "git push", "git pull"] },
+        { label: "Teamwork & CI/CD", sub: "Pull requests, rebase and pipelines", color: "#34a853", items: ["Pull Requests: create", "Pull Requests: review", "Pull Requests: approve", "Pull Requests: merge", "git rebase", "git merge", "CI/CD with Bitbucket Pipelines"] },
+        { label: "Agile & Jira", sub: "Sprints, calls, issues and docs", color: "#fbbc05", items: ["Sprint Planning Call", "Daily Standup Call", "Sprint Review / Demo Call", "Sprint Retrospective Call", "Backlog Refinement Call", "Jira: sprints", "Jira: dashboards", "Epic", "Story", "Task", "Sub-task", "Backlog", "Issues", "Bug", "To Do", "In Progress", "Testing", "Deployment", "Done", "Confluence documentation"] },
+      ],
+    },
+    jobprofile: {
+      kicker: "Job Profile Building",
+      title: "Job profile building",
+      root: "Job Profile Building",
+      branches: [
+        { label: "Resume", sub: "Your document for recruiters", color: "#4285f4", items: ["Resume creation"] },
+        { label: "LinkedIn", sub: "Your professional profile", color: "#34a853", items: ["LinkedIn creation"] },
+        { label: "Naukri", sub: "Your job portal profile", color: "#fbbc05", items: ["Naukri creation"] },
+      ],
+    },
+    jobready: {
+      kicker: "Interview & Job Ready syllabus",
+      title: "Real-time projects and job-ready skills",
+      root: "Real-time Projects",
+      prefix: "jobprofile",
+      noStats: true,
+      branches: [
+        { label: "Hands-on Projects", sub: "Build a real project end to end", color: "#ea4335", items: ["Real-time project hands-on project development"] },
+        { label: "Working Environments", sub: "Work across different environments", color: "#8ab4f8", items: ["Working with different ENV"] },
+      ],
+    },
+    linux: {
+      kicker: "Linux syllabus",
+      title: "Linux basics and the Google Cloud CLI",
+      root: "Linux",
+      branches: [
+        { label: "Linux Basics", sub: "Folders and the screen", color: "#4285f4", items: ["folder <=> directory", "clear"] },
+        { label: "Google Cloud CLI", sub: "Sign in and pick a project", color: "#34a853", items: ["gcloud auth login", "gcloud config set project <project-id>"] },
+        { label: "Terminal Shortcuts", sub: "Work faster in the shell", color: "#fbbc05", items: ["tab", "up arrow", "down arrow", "Ctrl+Z"] },
+      ],
+    },
+    realtime: {
+      kicker: "Real-time Projects syllabus",
+      title: "Hands-on real-time projects",
+      root: "Real-time Projects",
+      branches: [
+        { label: "Hands-on Projects", sub: "Build a real project end to end", color: "#ea4335", items: ["Real-time project hands-on project development"] },
+        { label: "Working Environments", sub: "Work across different environments", color: "#8ab4f8", items: ["Working with different ENV"] },
+      ],
+    },
+  };
+  SYLLABUS.git = Object.assign({}, SYLLABUS.devops, { kicker: "Git syllabus", title: "From Git basics to pull requests and CI/CD", root: "Git", branches: SYLLABUS.devops.branches.slice(0, 2) });
+  SYLLABUS.jira = Object.assign({}, SYLLABUS.devops, { kicker: "Jira & Agile syllabus", title: "From sprints and backlogs to Jira workflows", root: "Jira", branches: SYLLABUS.devops.branches.slice(2) });
+  SYLLABUS.bdps = Object.assign({}, SYLLABUS.pyspark, { kicker: "Big Data & PySpark syllabus", title: "From big data foundations to Spark pipelines", prefix: "bigdata" });
+  SYLLABUS.devopsfull = Object.assign({}, SYLLABUS.devops, { kicker: "DevOps & Tools syllabus", title: "From Linux basics to agile teamwork", prefix: "linux" });
+
+  let currentSubject = "sql";
+
+  function syllabusTreeHtml(key) {
+    const sub = SYLLABUS[key];
+    const b = sub.branches;
+    return `
+      <div class="syl-mm">
+        <div class="syl-root"><span>${esc(sub.root)}</span></div>
+        <div class="syl-stem"></div>
+        <div class="syl-bar" style="margin: 0 calc(50% / ${b.length})"></div>
+        <div class="syl-cols" style="grid-template-columns: repeat(${b.length}, minmax(0,1fr))">
+          ${b.map((x) => `
+            <div class="syl-col" style="--c:${x.color}">
+              <div class="syl-drop"></div>
+              <div class="syl-branch">
+                <button type="button" class="syl-node" aria-expanded="false">
+                  <span class="syl-dot"></span>
+                  <span class="syl-node-text"><strong>${esc(x.label)}</strong><small>${esc(x.sub)}</small></span>
+                  <em class="syl-count">${x.items.length}</em>
+                  <span class="syl-chev" aria-hidden="true">&#9656;</span>
+                </button>
+                <div class="syl-leaves"><div class="syl-leaves-inner">
+                  <div class="syl-chips">${x.items.map((t) => `<code>${esc(t)}</code>`).join("")}</div>
+                </div></div>
+              </div>
+            </div>`).join("")}
+        </div>
+      </div>`;
+  }
+
+  function buildSyllabusTree(key) {
+    const sub = SYLLABUS[key];
+    const divider = (label) => '<div class="syl-divider"><span>' + esc(label) + '</span></div>';
+    let html = "";
+    if (sub.prefix) html += syllabusTreeHtml(sub.prefix) + divider(SYLLABUS[sub.prefix].root + " on top of " + sub.root);
+    html += syllabusTreeHtml(key);
+    if (sub.suffix) html += divider(SYLLABUS[sub.suffix].root + " below " + sub.root) + syllabusTreeHtml(sub.suffix);
+    $("#sqlTree").innerHTML = html;
+    $$("#sqlTree .syl-node").forEach((btn) => {
+      btn.addEventListener("click", () => setBranch(btn, btn.getAttribute("aria-expanded") !== "true"));
+    });
+  }
+
+  function setBranch(btn, open) {
+    btn.setAttribute("aria-expanded", String(open));
+    btn.parentElement.classList.toggle("open", open);
+  }
+
+  function setAllBranches(open) {
+    $$("#sqlTree .syl-node").forEach((btn) => setBranch(btn, open));
+  }
+
+  function openSyllabus(key) {
+    const modal = $("#sqlModal");
+    if (!modal || !SYLLABUS[key]) return;
+    currentSubject = key;
+    const sub = SYLLABUS[key];
+    $("#sylKicker").textContent = sub.kicker;
+    $("#sqlModalTitle").textContent = sub.title;
+    sub.branches.forEach((x, i) => {
+      $(`#sylLabel${i + 1}`).textContent = x.label;
+    });
+    document.querySelector(".syl-stats").hidden = !!sub.noStats;
+    // Counts add up every tree on the panel, level by level. Unused levels hide their card.
+    const layers = [sub.prefix, sub.suffix].filter(Boolean).map((k) => SYLLABUS[k].branches);
+    const cards = [$("#sqlCountBasics"), $("#sqlCountInter"), $("#sqlCountWin")];
+    cards.forEach((el, i) => {
+      const own = sub.branches[i] ? sub.branches[i].items.length : 0;
+      const extra = layers.reduce((n, br) => n + (br[i] ? br[i].items.length : 0), 0);
+      const card = el.parentElement;
+      card.hidden = !(sub.branches[i] || extra);
+      el.textContent = own + extra;
+    });
+    buildSyllabusTree(key);
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    setAllBranches(false);
+    $("#sqlModalClose").focus();
+  }
+
+  function closeSqlModal() {
+    const modal = $("#sqlModal");
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  // Skill tiles (SQL and Python)
+  $$(".skill-link[data-syllabus]").forEach((tile) => {
+    tile.addEventListener("click", () => openSyllabus(tile.dataset.syllabus));
+    tile.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openSyllabus(tile.dataset.syllabus); }
+    });
+  });
+
+  // Course cards (rendered later, so use delegation)
+  $("#coursesGrid").addEventListener("click", (e) => {
+    const card = e.target.closest(".course-card");
+    const title = card?.querySelector("h3")?.textContent.trim() || "";
+    if (title === "SQL Fundamentals") openSyllabus("sql");
+    if (title === "Python & Data Processing") openSyllabus("python");
+    if (title === "Big Data & PySpark") openSyllabus("bdps");
+    if (title === "GCP Cloud Platform") openSyllabus("gcp");
+    if (title === "DevOps & Tools") openSyllabus("devopsfull");
+    if (title === "Interview & Job Ready") openSyllabus("jobready");
+  });
+
+  $$(".skill-open[data-open]").forEach((btn) => {
+    btn.addEventListener("click", () => openSyllabus(btn.dataset.open));
+  });
+
+  $("#sqlExpandAll").addEventListener("click", () => setAllBranches(true));
+  $("#sqlCollapseAll").addEventListener("click", () => setAllBranches(false));
+  $("#sqlModalClose").addEventListener("click", closeSqlModal);
+  $("#sqlModal").addEventListener("click", (e) => { if (e.target.id === "sqlModal") closeSqlModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSqlModal(); });
 
   /* ---------- Initial data ---------- */
 

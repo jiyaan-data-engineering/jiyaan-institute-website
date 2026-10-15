@@ -69,7 +69,7 @@ COURSES = [
 ]
 
 BATCHES = [
-    ('February Batch', 'Online + recorded', '2027-02-08', 'Sat & Sun, 10:00 - 13:00 IST', 30),
+    ('January Batch', 'Online + recorded', '2027-02-08', 'Sat & Sun, 10:00 - 13:00 IST', 30),
     ('June Batch', 'Online + recorded', '2027-06-07', 'Mon - Fri, 19:30 - 21:30 IST', 30),
     ('October Batch', 'Online + recorded', '2027-10-04', 'Tue & Thu, 20:00 - 22:00 IST', 30),
 ]

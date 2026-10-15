@@ -4,6 +4,8 @@ Run with:  python app.py   then open http://127.0.0.1:5001
 """
 import os
 import re
+import smtplib
+from email.message import EmailMessage
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request, send_from_directory
@@ -28,6 +30,44 @@ MAX_HISTORY_TURNS = 8
 
 def rows_to_dicts(rows):
     return [dict(r) for r in rows]
+
+
+def send_enquiry_email(name, email, phone, course, message):
+    """Email a new enquiry to the institute. Returns True if sent.
+
+    Needs SMTP_USER, SMTP_PASSWORD (a Gmail app password) and ENQUIRY_TO in the environment.
+    If they are missing or sending fails, the enquiry is still saved in the database.
+    """
+    user = os.getenv("SMTP_USER", "").strip()
+    password = os.getenv("SMTP_PASSWORD", "").strip()
+    to = os.getenv("ENQUIRY_TO", "").strip() or user
+    if not (user and password and to):
+        app.logger.warning("Enquiry email not sent: SMTP settings are missing.")
+        return False
+
+    msg = EmailMessage()
+    msg["Subject"] = f"New enquiry from {name}"
+    msg["From"] = user
+    msg["To"] = to
+    msg["Reply-To"] = email
+    lines = [
+        'Name: ' + name,
+        'Email: ' + email,
+        'Phone: ' + (phone or '-'),
+        'Course of interest: ' + (course or '-'),
+        '',
+        'Message:',
+        message or '-',
+    ]
+    msg.set_content('\n'.join(lines) + '\n')
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as smtp:
+            smtp.login(user, password)
+            smtp.send_message(msg)
+        return True
+    except Exception as exc:
+        app.logger.exception("Enquiry email failed: %s", exc)
+        return False
 
 
 # ---------- Pages ----------
@@ -111,6 +151,7 @@ def api_enquiry():
             "INSERT INTO enquiries (name, email, phone, message, course) VALUES (?, ?, ?, ?, ?)",
             (name[:120], email[:160], phone[:30], message[:2000], course[:120]),
         )
+    send_enquiry_email(name[:120], email[:160], phone[:30], course[:120], message[:2000])
     return jsonify({"ok": True, "message": "Thanks! Our team will contact you within one working day."})
 
 
