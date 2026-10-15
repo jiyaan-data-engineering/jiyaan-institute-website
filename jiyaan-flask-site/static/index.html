@@ -33,9 +33,9 @@
       <a href="#why-gcp">Why GCP</a>
       <a href="#why-jiyaan">Why Jiyaan</a>
       <a href="#courses">Curriculum</a>
-      <a href="#pricing">Pricing</a>
       <a href="#stories">Success</a>
       <a href="#faq">FAQ</a>
+      <a href="#pricing">Pricing</a>
       <a href="#contact">Contact</a>
       <a href="#contact" class="btn btn-small">Book a free demo</a>
     </nav>
@@ -96,43 +96,44 @@
         <p>Ten skills, each practised in live labs and real projects.</p>
       </div>
       <div class="skills-grid" data-reveal>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="sql" role="button" tabindex="0">
           <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
           <strong>SQL</strong>
-        </div>
-        <div class="skill-tile">
+  
+      </div>
+        <div class="skill-tile skill-link" data-syllabus="python" role="button" tabindex="0">
           <span class="skill-logo" style="--logo: url(/static/img/skills/python.svg); --c: #4b8bbe"></span>
           <strong>Python</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="bigdata" role="button" tabindex="0">
           <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7 7.5l3.5 8M17 7.5l-3.5 8M7.5 6h9"/></svg></span>
           <strong>Big Data</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="pyspark" role="button" tabindex="0">
           <span class="skill-logo" style="--logo: url(/static/img/skills/apachespark.svg); --c: #e25a1c"></span>
           <strong>PySpark</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="datamodel" role="button" tabindex="0">
           <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg></span>
           <strong>Data Modelling</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="linux" role="button" tabindex="0">
           <span class="skill-logo" style="--logo: url(/static/img/skills/linux.svg); --c: #fcc624"></span>
           <strong>Linux</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="gcp" role="button" tabindex="0">
           <span class="skill-icon skill-brand"><img src="/static/img/gcp-cloud-logo.png" alt="" width="44" height="44"></span>
           <strong>GCP Cloud</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="git" role="button" tabindex="0">
           <span class="skill-logo" style="--logo: url(/static/img/skills/git.svg); --c: #f05032"></span>
           <strong>Git</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="jira" role="button" tabindex="0">
           <span class="skill-logo" style="--logo: url(/static/img/skills/jira.svg); --c: #4c9aff"></span>
           <strong>Jira</strong>
         </div>
-        <div class="skill-tile">
+        <div class="skill-tile skill-link" data-syllabus="realtime" role="button" tabindex="0">
           <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></svg></span>
           <strong>Real Projects</strong>
         </div>
@@ -459,9 +460,7 @@
               <path d="M -10 -16 L -14 10 M 10 -16 L 14 10" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/>
               <path d="M -16 10 L -6 10 M 6 10 L 16 10" stroke="#111" stroke-width="5" stroke-linecap="round"/>
             </g>
-            <animateMotion dur="16s" repeatCount="indefinite" rotate="0">
-              <mpath href="#roadPath"/>
-            </animateMotion>
+            
           </g>
         </g>
         </svg>
@@ -538,8 +537,9 @@
       <div class="section-head" data-reveal>
         <span class="eyebrow">Batches</span>
         <h2>Upcoming batches</h2>
-        <p>Only 30 seats per batch, so mentoring stays personal.</p>
+        <p>Three batches every year, with only 30 seats each, so mentoring stays personal.</p>
       </div>
+      <div class="ba-alert" id="batchAlert" role="status" hidden></div>
       <div class="grid grid-batches" id="batchesGrid" data-reveal></div>
     </section>
 
@@ -573,9 +573,31 @@
       </ol>
 <div class="pk" data-reveal>
         <h3 class="pk-title">Packages from offer letters</h3>
-        <div class="pk-hilo">
-          <div class="pk-card hi"><span>Highest package</span><strong>₹25 LPA</strong><small>Insight Global (staffing firm)</small><small>Highest employer: Deloitte, ₹23.6 LPA</small></div>
-          <div class="pk-card lo"><span>Lowest package</span><strong>₹7 LPA</strong><small>Capgemini</small><small>SQSHFT is about ₹7 LPA (approximate)</small></div>
+        <div class="pkv" data-reveal>
+          <div class="pkv-cards">
+            <div class="pkv-card hi">
+              <span class="pkv-badge">&#9650; Highest</span>
+              <span class="pkv-label">Highest package</span>
+              <strong class="pkv-num">&#8377;25 LPA</strong>
+              <small>Insight Global (staffing firm)</small>
+              <em>Highest employer: Deloitte, &#8377;23.6 LPA</em>
+            </div>
+            <div class="pkv-card lo">
+              <span class="pkv-badge">&#9660; Lowest</span>
+              <span class="pkv-label">Lowest package</span>
+              <strong class="pkv-num">&#8377;7 LPA</strong>
+              <small>Capgemini</small>
+              <em>SQSHFT is about &#8377;7 LPA (approximate)</em>
+            </div>
+          </div>
+          <div class="pkv-scale" aria-hidden="true">
+            <div class="pkv-track">
+              <span class="pkv-fill"></span>
+              <span class="pkv-marker lo-m" style="left:10%"><b>&#8377;7</b></span>
+              <span class="pkv-marker hi-m" style="left:100%"><b>&#8377;25</b></span>
+            </div>
+            <div class="pkv-ticks"><span>&#8377;5</span><span>&#8377;10</span><span>&#8377;15</span><span>&#8377;20</span><span>&#8377;25</span></div>
+          </div>
         </div>
         <p class="fine-print">Annual CTC or fixed pay as stated in each letter. Allegis and VSPL (₹19 LPA) are as provided and not yet checked against their letters.</p>
       </div>
@@ -709,6 +731,30 @@
     </nav>
     <p>&copy; <span id="year"></span> Jiyaan. All rights reserved.</p>
   </footer>
+
+
+  <!-- ===== SQL syllabus panel ===== -->
+  <div class="syl-backdrop" id="sqlModal" hidden>
+    <div class="syl-panel" role="dialog" aria-modal="true" aria-labelledby="sqlModalTitle">
+      <button type="button" class="syl-close" id="sqlModalClose" aria-label="Close SQL syllabus">&times;</button>
+      <header class="syl-head">
+        <span class="syl-kicker" id="sylKicker">SQL syllabus</span>
+        <h3 id="sqlModalTitle">From first query to window functions</h3>
+        <div class="syl-stats">
+          <div><strong id="sqlCountBasics">0</strong><span id="sylLabel1">Basics</span></div>
+          <div><strong id="sqlCountInter">0</strong><span id="sylLabel2">Intermediate</span></div>
+          <div><strong id="sqlCountWin">0</strong><span id="sylLabel3">Data engineer</span></div>
+        </div>
+      </header>
+      <div class="syl-tree-wrap">
+        <div class="syl-tools">
+          <button type="button" class="syl-tool" id="sqlExpandAll">Expand all</button>
+          <button type="button" class="syl-tool" id="sqlCollapseAll">Collapse all</button>
+        </div>
+        <div class="syl-tree" id="sqlTree"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== Chatbot ===== -->
   <button class="chat-launcher" id="chatLauncher" aria-expanded="false" aria-controls="chatPanel" aria-label="Open pricing assistant">
