@@ -667,36 +667,59 @@
     const art = $(".road-art");
     if (!path || !group) return;
     const NS = "http://www.w3.org/2000/svg";
-    // Each stop: [title, detail]. A stop's label appears only when the walker reaches it.
+    // [title, days, skill]
     const stops = [
-      ["Jiyaan Institute", "Day 0 \u00b7 Start your journey"],
-      ["SQL Analyst", "Days 1\u201315 \u00b7 Pro in SQL and coding"],
-      ["Python Coder", "Days 16\u201330 \u00b7 Writes Python scripts"],
-      ["Spark Engineer", "Days 31\u201346 \u00b7 PySpark and data engineering"],
-      ["GCP Data Engineer", "Days 47\u201360 \u00b7 GCP cloud pipelines"],
-      ["Job-Ready", "Days 61\u201376 \u00b7 Naukri, resume and LinkedIn"],
-      ["Interviews", "Days 77\u201390 \u00b7 Attending interviews"],
-      ["MNC Job Offer", "Offer from an MNC company"],
+      ["Jiyaan Institute", "Day 0", "Start your journey"],
+      ["SQL Analyst", "Days 1\u201315", "Pro in SQL and coding"],
+      ["Python Coder", "Days 16\u201330", "Writes Python scripts"],
+      ["Spark Engineer", "Days 31\u201346", "PySpark & data engineering"],
+      ["GCP Data Engineer", "Days 47\u201360", "GCP cloud pipelines"],
+      ["Job-Ready", "Days 61\u201376", "Naukri, resume & LinkedIn"],
+      ["Interviews", "Days 77\u201390", "Attending interviews"],
+      ["MNC Job Offer", "Offer", "From an MNC company"],
     ];
     const colors = ["#8ab4f8", "#4285f4", "#34a853", "#fbbc05", "#ea4335", "#4285f4", "#34a853", "#ea4335"];
     const total = path.getTotalLength();
     const fractions = [0.03, 0.163, 0.296, 0.429, 0.561, 0.694, 0.827, 0.96];
     const last = stops.length - 1;
-    const points = [];
-    const stopEls = [];
+    const points = fractions.map((f) => path.getPointAtLength(total * f));
 
-    stops.forEach(([name, sub], i) => {
-      const pt = path.getPointAtLength(total * fractions[i]);
-      points.push(pt);
+    // Label rows (road-group coordinates). Each stop takes the first row with room, so labels never overlap.
+    const ROWS = [{ y: 84, dir: -1 }, { y: 520, dir: 1 }, { y: 612, dir: 1 }];
+    const lastRight = ROWS.map(() => -1e9);
+    const placed = stops.map(([name, days, skill], i) => {
+      const w = Math.max(name.length * 13.5, skill.length * 8.6, 90);
+      const pt = points[i];
+      const order = i === last ? [2, 1, 0] : i % 2 === 0 ? [1, 0, 2] : [0, 1, 2];
+      let row = order.find((r) => pt.x - w / 2 >= lastRight[r] + 16);
+      if (row === undefined) row = order.reduce((best, r) => (lastRight[r] < lastRight[best] ? r : best), order[0]);
+      lastRight[row] = pt.x + w / 2;
+      return { row, w };
+    });
+
+    const stopEls = [];
+    stops.forEach(([name, days, skill], i) => {
+      const pt = points[i];
+      const { row, w } = placed[i];
+      const up = ROWS[row].dir < 0;
+      const rowY = ROWS[row].y;
+      const cx = Math.min(Math.max(pt.x, w / 2 + 8), 1192 - w / 2);
       const isLast = i === last;
-      const above = i % 2 === 1;
-      const anchorX = isLast ? pt.x - 34 : pt.x;
-      const anchor = isLast ? "end" : "middle";
-      const labelY = above ? pt.y - 52 : pt.y + 62;
 
       const g = document.createElementNS(NS, "g");
       g.setAttribute("class", "road-stop");
       g.setAttribute("data-stop", String(i));
+
+      const leader = document.createElementNS(NS, "line");
+      leader.setAttribute("x1", pt.x);
+      leader.setAttribute("y1", up ? pt.y - 24 : pt.y + 24);
+      leader.setAttribute("x2", pt.x);
+      leader.setAttribute("y2", up ? rowY + 46 : rowY - 20);
+      leader.setAttribute("stroke", colors[i]);
+      leader.setAttribute("stroke-width", "2");
+      leader.setAttribute("stroke-dasharray", "3 4");
+      leader.setAttribute("opacity", "0.8");
+      g.appendChild(leader);
 
       const circle = document.createElementNS(NS, "circle");
       circle.setAttribute("cx", pt.x);
@@ -711,24 +734,21 @@
       num.setAttribute("y", pt.y + 8);
       num.setAttribute("text-anchor", "middle");
       num.setAttribute("class", "road-stop-num");
-      num.textContent = i === 0 ? "S" : i === last ? "\u2605" : String(i);
+      num.textContent = i === 0 ? "S" : isLast ? "\u2605" : String(i);
       g.appendChild(num);
 
-      const label = document.createElementNS(NS, "text");
-      label.setAttribute("x", anchorX);
-      label.setAttribute("y", labelY);
-      label.setAttribute("text-anchor", anchor);
-      label.setAttribute("class", "road-label-name");
-      label.textContent = name;
-      g.appendChild(label);
-
-      const subEl = document.createElementNS(NS, "text");
-      subEl.setAttribute("x", anchorX);
-      subEl.setAttribute("y", labelY + (above ? -20 : 22));
-      subEl.setAttribute("text-anchor", anchor);
-      subEl.setAttribute("class", "road-label-days");
-      subEl.textContent = sub;
-      g.appendChild(subEl);
+      const addText = (y, txt, cls) => {
+        const t = document.createElementNS(NS, "text");
+        t.setAttribute("x", cx);
+        t.setAttribute("y", y);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("class", cls);
+        t.textContent = txt;
+        g.appendChild(t);
+      };
+      addText(rowY, name, "road-label-name");
+      addText(rowY + 20, days, "road-label-days");
+      addText(rowY + 38, skill, "road-label-days");
 
       group.appendChild(g);
       stopEls.push(g);
@@ -756,7 +776,7 @@
       return;
     }
 
-    // Walk stop to stop. A stop's label appears on arrival. The final arrival triggers the celebration.
+    // Walk stop to stop. Each stop's label appears on arrival. The final arrival triggers the celebration.
     const legs = [{ type: "stop", at: fractions[0], dur: 900 }];
     for (let i = 1; i <= last; i++) {
       legs.push({ type: "move", from: fractions[i - 1], to: fractions[i], dur: 1800, show: i });
