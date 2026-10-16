@@ -1651,3 +1651,80 @@
 /* Size to the section's content width so both rows stay centred and inside the page */
 .facts-grid { width: 100%; max-width: 1200px; margin: 0 auto; }
 .gcp-intro .tag-row { width: 100%; max-width: 1200px; margin: 26px auto 0; }
+
+/* ===== Chat: white panel with chart wallpaper, live launcher ===== */
+.chat-panel { background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg stroke='%23c9d7f3' stroke-width='1' fill='none' opacity='.55'%3E%3Cpath d='M0 40H160M0 80H160M0 120H160M40 0V160M80 0V160M120 0V160'/%3E%3C/g%3E%3Cpolyline points='10,130 45,100 75,112 110,60 150,72' stroke='%234285f4' stroke-width='2' fill='none' opacity='.28'/%3E%3Crect x='20' y='118' width='12' height='26' fill='%2334a853' opacity='.12'/%3E%3Crect x='60' y='96' width='12' height='48' fill='%23fbbc05' opacity='.12'/%3E%3Crect x='100' y='70' width='12' height='74' fill='%234285f4' opacity='.12'/%3E%3C/svg%3E") repeat; color: #0b1128; border: 1px solid #d6e2ff; box-shadow: 0 30px 80px rgba(10,20,60,0.35); }
+.chat-head { background: linear-gradient(120deg, #4285f4, #34a853); border-bottom: 0; }
+.chat-head strong { color: #ffffff; }
+.chat-head span { color: rgba(255,255,255,0.88); }
+.chat-close { color: #ffffff; }
+.chat-messages { background: transparent; }
+.msg { color: #0b1128; }
+.msg.user { background: #4285f4; color: #ffffff; }
+.msg.bot { background: linear-gradient(135deg, #1e5fd6, #4285f4); color: #ffffff; border: 1px solid #1e5fd6; box-shadow: 0 8px 22px rgba(30,95,214,0.28); }
+.msg.error { background: #fdeceb; border-color: #f2b8b5; color: #8a1f17; }
+.chat-chips { background: transparent; }
+.chat-chips button { background: #ffffff; color: #1a4fd1; border: 1px solid #cfd9f0; }
+.chat-chips button:hover { background: #eef4ff; }
+.chat-form { background: #ffffff; border-top: 1px solid #d6e2ff; }
+.chat-form input { background: #ffffff; color: #0b1128; border: 1px solid #cfd9f0; }
+.chat-form input::placeholder { color: #7a86a6; }
+.chat-form input:focus { border-color: #4285f4; box-shadow: 0 0 0 4px rgba(66,133,244,0.18); }
+
+/* Live launcher: avatar, pulsing live dot, popping speech bubble */
+.chat-launcher { position: fixed; }
+.cl-avatar { position: relative; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,0.18); color: #fff; }
+.cl-avatar svg { width: 22px; height: 22px; }
+.cl-live { position: absolute; right: -2px; bottom: -2px; width: 11px; height: 11px; border-radius: 50%; background: #34d399; border: 2px solid #1e4fd1; box-shadow: 0 0 0 0 rgba(52,211,153,0.7); animation: clLive 1.8s infinite; }
+.chat-launcher::after { content: ""; position: absolute; left: 6px; top: 50%; width: 48px; height: 48px; margin-top: -24px; border-radius: 50%; border: 2px solid rgba(66,133,244,0.55); animation: clRing 2.4s ease-out infinite; pointer-events: none; z-index: -1; }
+.chat-nudge { position: absolute; right: 0; bottom: calc(100% + 14px); white-space: nowrap; padding: 10px 16px; border-radius: 16px 16px 4px 16px; font-size: 0.85rem; font-weight: 700; color: #0b1128; background: #ffffff; box-shadow: 0 12px 30px rgba(10,20,60,0.25); transform-origin: bottom right; animation: nudgePop 7s infinite; pointer-events: none; }
+.chat-nudge::after { content: ""; position: absolute; right: 18px; bottom: -7px; width: 14px; height: 14px; background: #ffffff; transform: rotate(45deg); }
+@keyframes clLive { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.7); } 70% { box-shadow: 0 0 0 9px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+@keyframes clRing { 0% { transform: scale(0.8); opacity: 0.9; } 100% { transform: scale(1.9); opacity: 0; } }
+@keyframes nudgePop { 0%, 6% { opacity: 0; transform: translateY(10px) scale(0.85); } 10%, 28% { opacity: 1; transform: none; } 34%, 100% { opacity: 0; transform: translateY(6px) scale(0.9); } }
+@media (prefers-reduced-motion: reduce) { .cl-live, .chat-launcher::after, .chat-nudge { animation: none; } .chat-nudge { opacity: 1; } }
+
+/* ===== Mobile fixes (phones, 760px and below). Desktop is unchanged. ===== */
+@media (max-width: 760px) {
+  /* Syllabus panels: one column, no clipping. !important overrides the inline column count. */
+  .syl-stem, .syl-bar, .syl-drop { display: none !important; }
+  .syl-cols { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .syl-tree-wrap { padding: 8px 14px 0; }
+  .syl-head { padding: 56px 16px 6px; }
+  .syl-stats { gap: 8px; max-width: none; }
+  .syl-stats div { padding: 12px 6px; }
+  .syl-stats strong { font-size: 1.6rem; }
+  .syl-stats span { font-size: 0.6rem; letter-spacing: 0.06em; white-space: normal; }
+  .syl-tools { justify-content: center; flex-wrap: wrap; }
+  .syl-root { margin: 0 auto 14px; }
+  .syl-node { grid-template-columns: auto 1fr auto auto; padding: 14px 14px 12px; gap: 8px; }
+  .syl-count { min-width: 30px; font-size: 0.72rem; }
+  .syl-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 12px; padding: 12px 0 14px; }
+  .syl-chips code { font-size: 0.72rem; white-space: normal; word-break: break-word; }
+  .syl-divider { margin: 22px 0 16px; }
+
+  /* GCP journey roadmap: Start and Destination badges sit inside the card, not cut off */
+  .roadmap-wrap { padding: 20px 0 16px !important; }
+  .road-flag { position: relative !important; left: auto !important; top: auto !important; bottom: auto !important; transform: none !important; display: block; width: max-content; margin: 0 auto 10px; }
+  .road-flag.end { margin: 10px auto 0; }
+
+  /* Facts and pills: clear spacing between the pills and the cards */
+  .facts-grid { margin-top: 24px; }
+  .gcp-intro .tag-row { margin-top: 18px; }
+
+  /* Batch cards: status badge sits above the mode label, not on top of it */
+  .bt-status { position: static; display: inline-block; margin: 0 0 10px; }
+  .bt-card { padding-top: 28px; }
+  .bt-ring { width: 130px; height: 130px; }
+  .bt-ring-inner { width: 102px; height: 102px; }
+}
+
+/* Journey labels: larger text, placed in fixed rows; congratulations moved to the bottom */
+.road-label-name { font-size: 22px !important; }
+.road-label-days { font-size: 16px !important; }
+.cel-msg { top: auto !important; bottom: 3%; font-size: clamp(0.85rem, 1.9vw, 1.15rem) !important; padding: 10px 22px !important; }
+
+/* Journey labels: name and detail sit in rows with room, each linked to its stop */
+.road-label-name { font-size: 22px !important; }
+.road-label-days { font-size: 15px !important; }
+.cel-msg { top: auto !important; bottom: 3%; font-size: clamp(0.85rem, 1.9vw, 1.15rem) !important; padding: 10px 22px !important; white-space: normal; text-align: center; max-width: 92%; }
